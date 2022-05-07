@@ -1,0 +1,102 @@
+/*
+*
+* Course: CIS*3490 The Design and Analysis of Algorithms
+* Assignment: 2
+*
+* Name: Justin Erogun
+* ID: 1144036
+* Date: 02/12/2022
+*
+*/
+
+1.	[Description]
+	
+	This program runs four algorithms (in order):
+		1. Brute Force Inversions
+		2. Divide and Conquer Inversions
+		3. Brute Force Convex Hull
+		4. Divide and Conquer Convex Hull
+
+	The execution time is displayed after each algorithm is ran.
+
+	For algorithms 3 and 4, after the computation of the convex hull
+	the user is prompted for input twice, for x and y components of 
+	vectors.
+
+	If the vectors provided exist on the extremes of the hull,
+	the shortest path algorithm will be executed and the distance,
+	number of points on the path, as well as the points themselves
+	will be displayed to the console.
+
+2.	[Build/Compiling]
+
+	To build, first extract all files from the tar.
+
+	Once all files have been extracted, ensure that all files
+	all present:
+
+root
+----a2.h
+----main.c
+----P11.c
+----P12.c
+----P21.c
+----P22.c
+----vec2.c
+----makefile
+----readme
+----design
+----data_A2_Q1.txt
+----data_A2_Q2.txt
+	
+	Files data_A2_Q1.txt and data_A2_Q2.txt must be in the same
+	directory as the makefile, and the later a2 executable.
+
+	The readme and design files are just text files.
+
+	The a2 executable can now be created by executing the
+
+		make
+
+	command. This will compile all .c files using the following flags:
+
+		-std=c99 
+		-lm
+
+	The -lm flag is needed to locate the math.h library.
+
+	The executable, named a2, should now be created in the current 
+	directory. It can also be removed by executing the 
+
+		make clean
+
+	command. 
+
+3.	[Testing]
+
+	* There is no need to input the names of data files into 
+	the command line or during the program's execution. *
+
+	To run the program, check that the executable a2 is within the
+	current directory and execute
+	
+		./a2
+
+	The program will begin to run each of the four algorithms.
+
+	The first algorithm typically executes within less than 5
+	seconds.
+
+	The second algorithm typically executes within 0.01 seconds.
+
+	The third algorithim typically executes within less than 40 
+	seconds. After the third algorithm finishes execution the user
+	is prompted for input in the form of 
+
+		x y
+
+	where x and y are floating-point values (e.g., 1234.5678).
+
+	The fourth algorithm typically executes within 0.005 seconds,
+	with a rarer upper bound of 0.015 seconds. Similar prompts
+	for input occur after its execution.
