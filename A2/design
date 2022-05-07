@@ -1,0 +1,288 @@
+/*
+*
+* Course: CIS*3490 The Design and Analysis of Algorithms
+* Assignment: 2
+*
+* Name: Justin Erogun
+* ID: 1144036
+* Date: 02/12/2022
+*
+*/
+
+P1.1
+
+	Effeciency: O(n^2)
+
+	[Pseudocode]
+
+	ALGORITHM bf_inversion(A[0...n - 1])
+		// Input: A is an array containing n >= 0 integers
+		t <- 0
+		for i <- 0 to n - 1 do
+			for j <- i + 1 to n do
+				if (A[i] > A[j])
+					t = t + 1
+		return t
+
+P1.2
+	
+	Efficiency: O(n log n)
+
+	[Pseudocode]
+
+	ALGORITHM dc_inversion(A[0...n - 1])
+		// Input: A is an array containing n >= 0 integers
+		B <- A
+		return _mergeSort(A, B, 0, n - 1)
+
+	ALGORITHM _mergeSort(A[0...n - 1], B[0...n - 1], l, r)
+		// Input: A is an array containing n >= 0 integers
+				  B is an array containing n >= 0 integers
+				  B is an array containing n >= 0 integers
+				  l is the start index of the left subarray in B
+				  r is the start index of the right subarray in B
+		x <- 0
+		if r < l
+			m <- (l + r) / 2
+			x <- x + _mergeSort(A, B, l, m)
+			x <- x + _mergeSort(A, B, m + 1, r)
+			x <- x + merge(A, B, l, m + 1, r)
+		return x
+
+	ALGORITHM merge(A[0...n - 1], B[0...n - 1], l, m, r)
+		// Input: A is an array containing n >= 0 integers
+				  B is an array containing n >= 0 integers
+				  B is an array containing n >= 0 integers
+				  l is the start index of the left subarray in B
+				  m is the end index of the left subarray in B
+				  r is the start index of the right subarray in B
+		i <- l
+		j <- m
+		k <- r
+		x <- 0
+		while i <= m - 1 and j <= r do
+			if A[i] <= A[j]
+				B[k] <- A[i]
+				i <- i + 1
+			else
+				B[k] <- A[j]
+				j <- j + 1
+				x <- x + (m - i)
+			k <- k + 1
+		while i <= m - 1 do
+			B[k] <- A[i]
+			k <- k + 1
+			i <- i + 1
+		while j <= r
+			B[k] <- A[j]
+			k <- k + 1
+			j <- j + 1
+		for i <- l to r do
+			A[i] <- B[i]
+		return x
+			
+P2.1
+
+	Efficiency: O(n^3)
+
+	[Pseudocode]
+	ALGORITHM bf_hull(A[0...n - 1])
+		// Input: A is an array containing n >= 0 2D vectors
+		B <- NULL
+		H <- NULL
+		all <- true
+		for i <- 0 to n do
+			v1 <- A[i]
+			for j <- 0 to n do
+				if i = j continue
+				v2 <- A[j]
+				for k <- 0 to n do
+					if k = j or k = i continue
+					v3 <- A[k]
+					d <- ((v1.y - v3.y) * (v1.x - v2.x)) - ((v1.y - v2.y) * (v1.x - v3.x))
+					if d > 0
+						B <- NULL
+						all <- false
+						break
+					if d = 0
+						a <- sqrt((v1.x - v2.x)^2 + (v1.y - v2.y)^2)
+						b <- sqrt((v1.x - v3.x)^2 + (v1.y - v3.y)^2)
+						if a < b
+							B <- B + a
+							v2 <- A[k]
+							k <- k + 1
+						else
+							B <- B + b
+							k <- k + 1
+				if all = true
+					H <- H + v1
+					if v2 in H continue
+					for b in B
+						H <- H + b
+					H <- H + v2
+		H <- order(H)
+		return H
+
+	ALGORITHM order(H)
+			// Input: H is an structure containing an array of 2D vectors and a length
+			V <- NULL
+			C <- NULL
+			p <- minx
+			m <- p
+			V <- V + p
+			while true do
+				next <- NULL
+				for h in H
+					if p = h continue
+					if (next is empty)
+						next <- p
+						continue
+					d <- ((p.y - h.y) * (p.x - next.x)) - ((p.y - next.y) * (p.x - h.x))
+					if d = 1
+						C <- NULL
+						next <- h
+					else if d = 0
+						a <- sqrt((p.x - next.x)^2 + (p.y - next.y)^2)
+						b <- sqrt((p.x - h.x)^2 + (p.y - h.y)^2)
+						if (a < b)
+							C <- C + next
+							next <- h
+						else
+							C <- C + h
+				if min = next continue
+				for c in C
+					V <- V + c
+				V <- V + next
+				p <- next
+			return V
+
+	ALGORITHM minx(A, s)
+		// Input: A is an array containing s 2D vectors
+				  s is the size of the array
+		if s <= 0 return NULL
+		m <- A[0]
+		for i <- 1 to s do
+			if (A[i].x < m.x)
+				m <- A[i]
+		return m
+
+P2.2
+
+	Efficiency: O(n log n)
+
+	[Pseudocode]
+	ALGORITHM dc_hull(A[0...n - 1])
+		// Input: A is an array containing n >= 0 2D vectors
+		H <- NULL
+		L <- NULL
+		R <- NULL
+		max <- A[0]
+		min <- max
+		for i <- 1 to n do
+			if min.x > A[i].x
+				min <- A[i]
+			if (max.x < A[i].x)
+				max <- A[i]
+		for i <- 1 to n do
+			if min = A[i] or max = A[i] continue
+			d <- ((min.y - A[i].y) * (min.x - max.x)) - ((min.y - max.y) * (min.x - A[i].x))
+			if d = 1
+				L <- L + A[i]
+			else
+				R <- R + A[i]
+		_dc_hull(H, L, min, max)
+		_dc_hull(H, R, max, min)
+		return H
+
+	ALGORITHM _dc_hull(A, B[0...n - 1], min, max)
+		// Input: A is a structure containing an array of 2D vectors and a length
+				  B is an array containing n >= 0 2D vectors
+				  min is the vector in B with the minimum x value
+				  max is the vector in B with the maximum x value
+		f <- NULL
+		md <- 0
+		for i <- 0 to n do
+			d <- ((min.y - B[i].y) * (min.x - max.x)) - ((min.y - max.y) * (min.x - B[i].x))
+			if d < 0 continue
+			ld <- ((max.x - min.x) * (B[i].y - min.y)) - ((max.y - min.y) * (B[i].x - min.x))
+			if md < ld
+				md <- ld
+				f <- B[i]
+		if f = NULL
+			if min not in A
+				A <- A + min
+			if max not in A
+				A <- A + max
+			return
+		L <- NULL
+		R <- NULL
+		for i <- 0 to n do
+			if min = B[i] or max = B[i] or f = B[i] continue
+			d <- ((min.y - B[i].y) * (min.x - f.x)) - ((min.y - f.y) * (min.x - B[i].x))
+			if d >= 0
+				L <- L + B[i]
+			d <- ((f.y - B[i].y) * (f.x - max.x)) - ((f.y - max.y) * (f.x - B[i].x))
+			if d >= 0
+				R <- R + B[i]
+		_dc_hull(H, L, min, f)
+		_dc_hull(H, R, f, max)
+
+Shortest Path
+	
+	Efficiency:
+
+	ALGORITHM _dc_hull(A, B, s1, s2)
+		// Input: A is a structure containing an array of 2D vectors and a length
+				  B is an empty structure containing an array of 2D vectors and a length
+				  s1 is a vector
+				  s2 is a vector
+		if s1 = s2 return 0
+		db <- 0
+		dc <- 0
+		i <- 0
+		is1 <- 0
+		is2 <- 0
+		b <- false 
+		while true do
+			if is1 = -1 and s1 = A[i]
+				b <- !b
+				if i = 0
+					dc <- dc + sqrt((s1.x - A[A.size - 1].x)^2 + (s1.y - A[A.size - 1].y)^2)
+				is1 <- i
+			if is2 = -1 and s2 = A[i]
+				b <- !b
+				if i = 0
+					dc <- dc + sqrt((s2.x - A[A.size - 1].x)^2 + (s2.y - A[A.size - 1].y)^2)
+				is2 <- i
+			if i = A.size - 1 break
+			if b = true
+				db <- db + sqrt((A[i].x - A[i + 1].x)^2 + (A[i].y - A[i + 1].y)^2)
+			else
+				dc <- dc + sqrt((A[i].x - A[i + 1].x)^2 + (A[i].y - A[i + 1].y)^2)
+			i <- i + 1
+		if is1 = -1 or is2 = -1
+			return 0
+		i <- is1
+		while true do
+			if i = A.size
+				i = 0
+			else if i = -1
+				i = A.size -1
+			B <- B + A[i]
+			if i = is2
+				break
+			if db < dc
+				if is1 < is2
+					i <- i + 1
+				else
+					i <- i - 1
+			else
+				if is1 < is2
+					i <- i - 1
+				else
+					i <- i + 1
+		if db < dc
+			return db
+		else
+			return dc
+					
