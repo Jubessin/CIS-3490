@@ -1,0 +1,65 @@
+/*
+* Course: CIS*3490 The Design and Analysis of Algorithms
+* Assignment: 4
+*
+* Name: Justin Erogun
+* ID: 1144036
+* Date: 03/28/2022
+*/
+
+1. [Description]
+
+	This program runs four algorithms (in order):
+		1. Optimal Binary Search Tree
+		2. Greedy Binary Search Tree
+		3. Stable Marriage
+
+	For algorithms 1 and 2, the file "data_A4_Q2.txt" will be used.
+
+2.	[Build/Compiling]
+
+	To build, first extract all files from the tar.
+
+	Once all files have been extracted, ensure that all files
+	all present:
+
+root
+----a4.h
+----main.c
+----P11.c
+----P12.c
+----P2.c
+----makefile
+----readme
+----data_A4_Q1.txt
+
+The readme and design files are just text files.
+
+	The a4 executable can now be created by executing the
+
+		make
+
+	command. This will compile all .c files using the following flags:
+
+		-std=c99 
+		-lm
+
+	The -lm flag is needed to locate the math.h library.
+
+	The executable, named a4, should now be created in the current 
+	directory. It can also be removed by executing the 
+
+		make clean
+
+	command. 
+
+3.	[Testing]
+
+	To run the program, check that the executable a4 is within the
+	current directory and execute
+	
+		./a4
+
+	The program will begin by asking for the file to use for P2.
+	
+	Then program will then begin to run each of the three algorithms.
